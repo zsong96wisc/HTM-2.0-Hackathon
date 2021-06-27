@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;1,100;1,200&display=swap"rel="stylesheet"/>
+    <title>Signature Code Request</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #F0F1F4;
+            font-family: 'Poppins';
+        }
+
+        .codeHolder {
+            width: fit-content;
+            height: fit-content;
+            max-width: 98%;
+            background-color: white;
+            margin: auto;
+            padding: 18px;
+            border-radius: 18px;
+            box-shadow: 0px 20px 22px rgba(0, 0, 0, 0.01), 0px 18px 18px rgba(7, 0, 27, 0.03);
+            margin-top: 4rem;
+        }
+
+        h1 {
+            text-align: center;
+            color: #384357;
+            margin-top: 2rem;
+        }
+
+        p {
+            border-top: 0;
+            text-align: center;
+            color: #A9ACB1;
+        }
+    </style>
+</head>
+<body>
+    <div class="codeHolder">
+        <canvas id="qr-code"></canvas>
+    </div>
+
+    <h1><%=code%></h1>
+    <p>Add this to a document in place of the signature field</p>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+<script>
+    var qr;
+    (function() {
+            qr = new QRious({
+            element: document.getElementById('qr-code'),
+            size: 295,
+            value: '<%=code%>'
+        });
+    })();
+</script>
+</html>

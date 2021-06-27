@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+    <title>New Signature</title>
+    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/3.3.3/adapter.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js"></script>
+	<script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js" ></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <style>
+		body { margin: 0; background-color: black; color: white; font-family: "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif; }header { display: flex; justify-content: space-between; width: 100%; height: 4rem; background-color: black; }.left { position: relative; left: 1.4rem; top: 1rem; width: 1.8rem; height: 1.8rem; background-color: black; }h3 { text-align: center; font-weight: 400; font-size: 23px; }.sub { font-size: 17px; color: #7C7C7C; }.scanner { margin: auto; width: 20rem; max-width: 95%; height: 20rem; background-color: #000; overflow: hidden; display: flex; justify-content: center; align-items: center;}.vid { height: auto; width: auto; justify-self: center; }.container { position: relative; top: 1rem; margin: auto; width: 21rem; height: 21rem; background-color: black; background-image: url("https://securesign.dotdevs.xyz/img/curves.svg"); background-position: center; background-size: cover;display: flex; justify-content: center; align-items: center; margin-bottom: 3.2rem; }
+    </style>
+
+	<style>
+		.divider {
+			display: flex;
+			justify-content: space-between;
+			position: relative;
+			left: 50%;
+			transform: translateX(-50%);
+			width: 21.5rem;
+			max-width: 100%;
+			height: 2rem;
+			background-color: black;
+		}
+
+		.leftLi, .rightLi {
+			position: relative;
+			top: 50%;
+			transform: translateY(-50%);
+			width: 8.6rem;
+			height: 1px;
+			background-color: #7C7C7C;
+		}
+
+		.leftLi {
+			float: left;
+		}
+
+		.rightLi {
+			float: right;
+		}
+
+		.darkTxt {
+			position: relative;
+			left: 50%;
+			transform: translateX(-50%);
+			font-family: "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
+			top: 1rem;
+			width: 21.5rem;
+			background-color: #222429;
+			border: 1px solid #373A41;
+			color: #9a9b9e;
+			border-radius: 6px;
+			font-weight: 500;
+			font-size: 18px;
+			padding: 6px 5px 6px 5px;
+			outline: 0;
+		}
+
+		.submitButton {
+			position: relative;
+			left: 50%;
+			transform: translateX(-50%);
+			margin-top: 2rem;
+			width: 21.5rem;
+			padding-top: 8px;
+			padding-bottom: 8px;
+			border-radius: 7px;
+			color: white;
+			background-color: rgb(0, 98, 255);
+			font-family: "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
+			outline: 0;
+			border: 0;
+		}
+	</style>
+</head>
+<body>
+    <header>
+        <div class="left" onclick="window.location = 'https://securesign.dotdevs.xyz/';" style="cursor: pointer;">
+            <img src="img/closeIco.svg" width="100%" height="100%">
+        </div>
+        <div></div>
+    </header>
+    <h3>Place the code inside the area<br><span class="sub">Scanning will start automatically</span></h3>
+
+    <div class="container">
+      	<div class="scanner">
+        	<video class="vid" autoplay="true" id="preview"></video>
+    	</div>
+	</div>
+
+	<div class="divider">
+		<div class="leftLi"></div><p class="sub" style="margin: 0; font-weight: 600; position: relative; top: 6px;">OR</p><div class="rightLi"></div>
+	</div>
+	<input class="darkTxt" id="code"><br>
+	<button class="submitButton" onclick="fetch();">Submit</button>
+</body>
+<script>
+    var scanner = new Instascan.Scanner({
+      video: document.getElementById('preview'),
+      scanPeriod: 5,
+      mirror: false,
+    });
+    scanner.addListener('scan', function (content) {
+		console.log(content)
+
+		if (content.length == 8) {
+			window.location = "https://securesign.dotdevs.xyz/view/" + content;
+		} else {
+			console.log("BAD CODE!");
+		}
+    });
+    Instascan.Camera.getCameras()
+      .then(function (cameras) {
+        if (cameras.length > 0) {
+          if (cameras.length >= 2) {
+            //Two or more cams => Mobile
+            scanner.start(cameras[1]);
+          } else {
+            //One cam => PC
+            scanner.start(cameras[0]);
+          }
+  
+          $('[name="options"]').on('change', function () {
+            if ($(this).val() == 1) {
+              if (cameras[0] != '') {
+                scanner.start(cameras[0]);
+              } else {
+                alert('No Front camera found!');
+              }
+            } else if ($(this).val() == 2) {
+              if (cameras[1] != '') {
+                scanner.start(cameras[1]);
+              } else {
+                alert('No Back camera found!');
+              }
+            }
+          });
+        } else {
+          console.error('No cameras found.');
+          alert('No cameras found.');
+        }
+      })
+      .catch(function (e) {
+        console.error(e);
+        alert(e);
+      });
+
+	  function fetch() {
+		  let val = document.getElementById("code").value;
+		  if (val.length = 8) {
+			window.location = "https://securesign.dotdevs.xyz/view/" + val;
+		  } else {
+			alert("Invalid code!");
+		  }
+	  }
+</script>
+</html>

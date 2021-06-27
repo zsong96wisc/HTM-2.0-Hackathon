@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Completed!</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
+        }
+
+        header {
+            width: 100%;
+            height: 10rem;
+            background-color: #34eb8f;
+        }
+
+        .topArea {
+            position: relative;
+            top: 1rem;
+            width: 100%;
+            height: fit-content;
+            margin: auto;
+        }
+
+        .backicon {
+            position: relative;
+            width: 1.6rem;
+            height: 1.6rem;
+            left: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .lower {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            height: fit-content;
+            margin-bottom: 1.2rem;
+        }
+
+        h2 {
+            position: relative;
+            top: 0.5rem;
+            margin: 0;
+            font-weight: 669;
+            margin-left: 1rem;
+            color: white;
+        }
+
+        .tickIcon {
+            position: relative;
+            right: 1rem;
+            width: 2.75rem;
+            height: 2.75rem;
+            float: right;
+        }
+
+        .space {
+            width: 92%;
+            height: fit-content;
+            background-color: white;
+            margin-left: 1rem;
+            box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.13);
+            border-radius: 10px;
+            padding-bottom: 2rem;
+        }
+
+        h5 {
+            font-size: 15px;
+            font-weight: 450;
+            color: #888;
+        }
+
+        .data {
+            font-size: 20px;
+            font-weight: 560;
+            color: rgb(42, 42, 42);
+        }
+
+        .qrArea {
+            width: 12rem;
+            height: 12rem;
+            margin: auto;
+            padding: 4px;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="topArea">
+            <div class="backicon" onclick="window.location = 'https://securesign.dotdevs.xyz';" style="cursor: pointer;">
+                <img src="img/white_Arrow.svg" width="100%" height="auto">
+            </div>
+        </div>
+        <div class="lower">
+            <h2>Signature Created!</h2>
+            <div class="tickIcon">
+                <img src="img/success.svg" width="100%" height="auto">
+            </div>
+        </div>
+        <div class="space">
+            <h5 style="position: relative; top: 1rem; left: 1rem;">Signature ID<br><span class="data"><%=code%></span></h5>
+
+            <div class="qrArea">
+                <canvas id="qr-code"></canvas>
+            </div>
+        </div>
+    </header>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+<script>
+    var qr;
+    (function() {
+            qr = new QRious({
+            element: document.getElementById('qr-code'),
+            size: 190,
+            value: '<%=code%>'
+        });
+    })();
+</script>
+</html>
